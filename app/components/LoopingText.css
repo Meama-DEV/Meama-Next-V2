@@ -1,45 +1,68 @@
 /* full-width bar */
 .looping-text__wrapper {
-    width: 100%;
-    background: #4b00ff;
-    overflow: hidden;
-    white-space: nowrap;
-    height: 30px; /* matches the screenshot height */
-    display: flex;
-    align-items: center;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: #5C0BC5;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+/* Hide completely during SSR and initial render to prevent flash */
+.looping-text__wrapper--hidden {
+  display: none !important;
+}
+
+/* Show after client-side mount */
+.looping-text__wrapper--visible {
+  display: flex;
+  animation: fadeIn 0.1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* moving strip */
-  .looping-text__track {
-    display: flex;
-    width: max-content;
-    animation: loopingText 12s linear infinite; /* faster like your screenshot */
-    will-change: transform;
+  to {
+    opacity: 1;
   }
-  
-  /* each duplicated group */
-  .looping-text__group {
-    display: flex;
-  }
-  
-  /* text item */
-  .looping-text__item {
-    padding: 0 2rem;  /* screenshot uses tighter spacing */
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #000000;
-    line-height: 1; /* prevents vertical shifting */
-  }
-  
-  /* seamless scroll */
-  @keyframes loopingText {
-    0% {
+}
+
+/* moving strip - only animate when visible */
+.looping-text__wrapper--visible .looping-text__track {
+  animation: loopingText 25s linear infinite;
+}
+
+.looping-text__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* duplicated group */
+.looping-text__group {
+  display: flex;
+}
+
+/* text item */
+.looping-text__item {
+  margin-right: 65px;   /* ← EXACT spacing between texts */
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1;
+}
+
+/* seamless scroll */
+@keyframes loopingText {
+  0% {
       transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
   }
-  
+  100% {
+      transform: translateX(-50%);
+  }
+}

@@ -8,6 +8,13 @@
   --color-light: #fff;
 }
 
+/* Critical: Hide looping text by default to prevent flash on reload */
+.looping-text__wrapper--hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 img {
   border-radius: 4px;
 }

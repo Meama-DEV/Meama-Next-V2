@@ -1,4 +1,4 @@
-import LoopingText from '~/components/LoopingText';import {
+import {
   Await,
   useLoaderData,
   Link,
@@ -7,10 +7,11 @@ import type {Route} from './+types/_index';
 import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import type {
-  FeaturedCollectionFragment,
-  RecommendedProductsQuery,
+  CollectionFragment,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import {NextHero} from '~/components/NextHero';
+import {NextHero2} from '~/components/NextHero2';
 
 
 export const meta: Route.MetaFunction = () => {
@@ -65,9 +66,10 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
-      <LoopingText />
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <NextHero />
+      <NextHero2 />
+      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+      {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>
   );
 }
@@ -75,7 +77,7 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: FeaturedCollectionFragment;
+  collection: CollectionFragment;
 }) {
   if (!collection) return null;
   const image = collection?.image;
@@ -97,7 +99,28 @@ function FeaturedCollection({
 function RecommendedProducts({
   products,
 }: {
-  products: Promise<RecommendedProductsQuery | null>;
+  products: Promise<{
+    products: {
+      nodes: Array<{
+        id: string;
+        title: string;
+        handle: string;
+        priceRange: {
+          minVariantPrice: {
+            amount: string;
+            currencyCode: string;
+          };
+        };
+        featuredImage: {
+          id: string;
+          url: string;
+          altText: string | null;
+          width: number;
+          height: number;
+        } | null;
+      }>;
+    };
+  } | null>;
 }) {
   return (
     <div className="recommended-products">

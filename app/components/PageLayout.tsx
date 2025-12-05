@@ -1,3 +1,4 @@
+
 import {Await, Link} from 'react-router';
 import {Suspense, useId} from 'react';
 import type {
@@ -8,6 +9,8 @@ import type {
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
+import LoopingText from '~/components/LoopingText';
+import {NextHeader} from '~/components/NextHeader';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -34,23 +37,17 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <Aside.Provider>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
-      )}
+      {/* <CartAside cart={cart} /> */}
+      {/* <SearchAside /> */}
+      {/* <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} /> */}
+      <LoopingText />
+      <NextHeader />
       <main>{children}</main>
-      <Footer
+      {/* <Footer
         footer={footer}
         header={header}
         publicStoreDomain={publicStoreDomain}
-      />
+      /> */}
     </Aside.Provider>
   );
 }
