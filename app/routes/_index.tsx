@@ -12,6 +12,7 @@ import type {
 import {ProductItem} from '~/components/ProductItem';
 import {NextHero} from '~/components/NextHero';
 import {NextHero2} from '~/components/NextHero2';
+import {ServiceGrid} from '~/components/ServiceGrid';
 
 
 export const meta: Route.MetaFunction = () => {
@@ -68,6 +69,7 @@ export default function Homepage() {
     <div className="home">
       <NextHero />
       <NextHero2 />
+      <ServiceGrid />
       {/* <FeaturedCollection collection={data.featuredCollection} /> */}
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>
