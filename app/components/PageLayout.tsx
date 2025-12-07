@@ -11,6 +11,7 @@ import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
 import LoopingText from '~/components/LoopingText';
 import {NextHeader} from '~/components/NextHeader';
+import {NextFooter} from '~/components/NextFooter';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -43,6 +44,7 @@ export function PageLayout({
       <LoopingText />
       <NextHeader />
       <main>{children}</main>
+      <NextFooter />
       {/* <Footer
         footer={footer}
         header={header}
