@@ -5,9 +5,9 @@ export function NextHero() {
   return (
     <section className="next-hero">
       <div className="next-hero__background">
-        <img 
-          src={containerImage} 
-          alt="Modern building" 
+        <img
+          src={containerImage}
+          alt="Modern building"
           className="next-hero__image"
         />
       </div>
