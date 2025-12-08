@@ -1,0 +1,92 @@
+{
+  "header": {
+    "navDirections": "Directions",
+    "navContact": "Contact",
+    "languageFullGeorgian": "Georgian",
+    "languageShortGeorgian": "Geo",
+    "languageFullEnglish": "English",
+    "languageShortEnglish": "Eng",
+    "languageFullRussian": "Russian",
+    "languageShortRussian": "Rus"
+  },
+  "hero": {
+    "headlineLine1": "See",
+    "headlineLine2": "Opportunities",
+    "bodyLine1": "Explore Meama's business processes and",
+    "bodyLine2": "discover new opportunities.",
+    "cta": "Start the journey",
+    "imageAlt": "Modern building"
+  },
+  "hero2": {
+    "title": "Our programs"
+  },
+  "serviceGrid": {
+    "seeMore": "See more →",
+    "fillForm": "Fill the form",
+    "services": {
+      "innovations": {
+        "title": "Innovation and future vision",
+        "bullets": [
+          "You spot innovative solutions",
+          "You build technologies of the future",
+          "You develop innovative processes"
+        ],
+        "description": "We help you refine innovative skills"
+      },
+      "analytical": {
+        "title": "Analytical and strategic thinking",
+        "bullets": [
+          "You see patterns",
+          "You solve complex problems",
+          "You craft business strategies"
+        ],
+        "description": "We help you refine analytical skills"
+      },
+      "financial": {
+        "title": "Financial resource management",
+        "bullets": [
+          "You analyze financial data",
+          "You build efficient budgets",
+          "You optimize financial processes"
+        ],
+        "description": "We help you refine financial management skills"
+      },
+      "communication": {
+        "title": "Communication and management",
+        "bullets": [
+          "You resolve communication challenges",
+          "You build effective teams",
+          "You develop leadership skills"
+        ],
+        "description": "We help you refine communication and management skills"
+      },
+      "rd": {
+        "title": "R&D (Research and Development)",
+        "bullets": [
+          "You conduct systematic research",
+          "You create development strategies",
+          "You develop innovative products"
+        ],
+        "description": "We help you refine research and development skills"
+      },
+      "logistics": {
+        "title": "Global logistics",
+        "bullets": [
+          "You optimize logistics processes",
+          "You manage global chains",
+          "You build efficient systems"
+        ],
+        "description": "We help you refine logistics skills"
+      }
+    }
+  },
+  "footer": {
+    "contact": "Contact:",
+    "phone": "0322800808",
+    "email": "INFO@MEAMACOLLECT.GE"
+  },
+  "loopingText": {
+    "text": "Open your eyes"
+  }
+}
+

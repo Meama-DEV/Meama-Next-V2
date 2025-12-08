@@ -1,8 +1,103 @@
-import {Link} from 'react-router';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {Link, useLocation, useNavigate} from 'react-router';
 import logo from '~/assets/Frame 1.svg';
 import './NextHeader.css';
+import {useI18n} from '~/lib/i18n';
 
 export function NextHeader() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {locale, setLocale, t} = useI18n();
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(min-width: 769px)').matches
+      : true,
+  );
+  const languageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(min-width: 769px)');
+    const updateMatch = () => setIsDesktop(mediaQuery.matches);
+    mediaQuery.addEventListener('change', updateMatch);
+    updateMatch();
+    return () => mediaQuery.removeEventListener('change', updateMatch);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        languageRef.current &&
+        !languageRef.current.contains(event.target as Node)
+      ) {
+        setIsLanguageOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
+  const scrollToServiceGrid = useCallback(() => {
+    const element = document.getElementById('service-grid');
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  }, []);
+
+  const handleServicesClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      if (location.pathname !== '/') {
+        navigate('/#service-grid');
+        // Allow navigation to complete before trying to scroll
+        setTimeout(scrollToServiceGrid, 50);
+      } else {
+        scrollToServiceGrid();
+      }
+    },
+    [location.pathname, navigate, scrollToServiceGrid],
+  );
+
+  const languageOptions = useMemo(
+    () =>
+      [
+        {
+          code: 'ka' as const,
+          label: isDesktop
+            ? t('header.languageFullGeorgian', 'ქართული')
+            : t('header.languageShortGeorgian', 'ქარ'),
+        },
+        {
+          code: 'en' as const,
+          label: isDesktop
+            ? t('header.languageFullEnglish', 'English')
+            : t('header.languageShortEnglish', 'Eng'),
+        },
+        {
+          code: 'ru' as const,
+          label: isDesktop
+            ? t('header.languageFullRussian', 'Русский')
+            : t('header.languageShortRussian', 'Рус'),
+        },
+      ],
+    [isDesktop, t],
+  );
+
+  const currentLanguageLabel =
+    languageOptions.find((option) => option.code === locale)?.label ||
+    languageOptions[0].label;
+
   return (
     <header className="next-header">
       <div className="next-header__top-line"></div>
@@ -19,43 +114,118 @@ export function NextHeader() {
 
         {/* Middle section: Georgian text */}
         <div className="next-header__middle">
-          <Link to="/trends" className="next-header__georgian-link">
-            მიმართულებები
+          <Link
+            to="/#service-grid"
+            className="next-header__georgian-link"
+            onClick={handleServicesClick}
+          >
+            {t('header.navDirections', 'მიმართულებები')}
           </Link>
           <Link to="/contact" className="next-header__georgian-link">
-            კონტაქტი
+            {t('header.navContact', 'კონტაქტი')}
           </Link>
         </div>
 
         {/* Right section: Language selector */}
         <div className="next-header__right">
-          <button className="next-header__language">
-            <svg
-              className="next-header__globe"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          <div
+            className="next-header__language-wrapper"
+            ref={languageRef}
+            onMouseEnter={() => {
+              if (isDesktop) setIsLanguageOpen(true);
+            }}
+            onMouseLeave={() => {
+              if (isDesktop) setIsLanguageOpen(false);
+            }}
+          >
+            <button
+              className="next-header__language"
+              aria-haspopup="true"
+              aria-expanded={isLanguageOpen}
+              onClick={() => setIsLanguageOpen((open) => !open)}
             >
-              <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-              <path d="M8 1C9.5 3 10.5 5.5 10.5 8C10.5 10.5 9.5 13 8 15" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-              <path d="M8 1C6.5 3 5.5 5.5 5.5 8C5.5 10.5 6.5 13 8 15" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-              <line x1="1" y1="8" x2="15" y2="8" stroke="currentColor" strokeWidth="1.5"/>
-            </svg>
-            <span className="next-header__language-text next-header__language-text--full">ENGLISH</span>
-            <span className="next-header__language-text next-header__language-text--short">ENG</span>
-            <svg
-              className="next-header__chevron"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <svg
+                className="next-header__globe"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="8"
+                  cy="8"
+                  r="7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  fill="none"
+                />
+                <path
+                  d="M8 1C9.5 3 10.5 5.5 10.5 8C10.5 10.5 9.5 13 8 15"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  fill="none"
+                />
+                <path
+                  d="M8 1C6.5 3 5.5 5.5 5.5 8C5.5 10.5 6.5 13 8 15"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  fill="none"
+                />
+                <line
+                  x1="1"
+                  y1="8"
+                  x2="15"
+                  y2="8"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+              </svg>
+              <span className="next-header__language-text next-header__language-text--full">
+                {currentLanguageLabel}
+              </span>
+              <span className="next-header__language-text next-header__language-text--short">
+                {currentLanguageLabel}
+              </span>
+              <svg
+                className="next-header__chevron"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 4.5L6 7.5L9 4.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
+            </button>
+            <div
+              className={`next-header__language-menu ${
+                isLanguageOpen ? 'is-open' : ''
+              }`}
+              role="menu"
             >
-              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-            </svg>
-          </button>
+              {languageOptions.map(({code, label}) => (
+                <button
+                  key={code}
+                  className="next-header__language-option"
+                  role="menuitem"
+                  onClick={() => {
+                    setLocale(code);
+                    setIsLanguageOpen(false);
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </header>

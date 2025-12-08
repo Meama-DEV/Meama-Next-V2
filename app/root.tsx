@@ -15,6 +15,12 @@ import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
+import nextHeaderStyles from '~/components/NextHeader.css?url';
+import serviceGridStyles from '~/components/ServiceGrid.css?url';
+import nextHeroStyles from '~/components/NextHero.css?url';
+import nextHero2Styles from '~/components/NextHero2.css?url';
+import nextFooterStyles from '~/components/NextFooter.css?url';
+import loopingTextStyles from '~/components/LoopingText.css?url';
 import {PageLayout} from './components/PageLayout';
 
 export type RootLoader = typeof loader;
@@ -62,6 +68,14 @@ export function links() {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'stylesheet', href: resetStyles},
+    {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: nextHeaderStyles},
+    {rel: 'stylesheet', href: serviceGridStyles},
+    {rel: 'stylesheet', href: nextHeroStyles},
+    {rel: 'stylesheet', href: nextHero2Styles},
+    {rel: 'stylesheet', href: nextFooterStyles},
+    {rel: 'stylesheet', href: loopingTextStyles},
   ];
 }
 
@@ -149,8 +163,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="stylesheet" href={resetStyles}></link>
-        <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />
       </head>

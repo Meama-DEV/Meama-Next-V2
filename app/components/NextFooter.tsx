@@ -2,8 +2,11 @@ import {Link} from 'react-router';
 import logo from '~/assets/Frame 1.svg';
 import phoneIcon from '~/assets/phone-call-phone-svgrepo-com.svg';
 import './NextFooter.css';
+import {useI18n} from '~/lib/i18n';
 
 export function NextFooter() {
+  const {t} = useI18n();
+
   return (
     <footer className="next-footer">
       <div className="next-footer__container">
@@ -19,7 +22,9 @@ export function NextFooter() {
 
         {/* Right section: Contact information */}
         <div className="next-footer__right">
-          <div className="next-footer__contact-heading">კონტაქტი:</div>
+          <div className="next-footer__contact-heading">
+            {t('footer.contact', 'კონტაქტი:')}
+          </div>
           
           <div className="next-footer__contact-item">
             <img 
@@ -27,7 +32,9 @@ export function NextFooter() {
               alt="Phone" 
               className="next-footer__icon next-footer__icon--phone"
             />
-            <span className="next-footer__contact-text">0322800808</span>
+            <span className="next-footer__contact-text">
+              {t('footer.phone', '0322800808')}
+            </span>
           </div>
 
           <div className="next-footer__contact-item">
@@ -58,7 +65,9 @@ export function NextFooter() {
                 fill="none"
               />
             </svg>
-            <span className="next-footer__contact-text">INFO@MEAMACOLLECT.GE</span>
+            <span className="next-footer__contact-text">
+              {t('footer.email', 'INFO@MEAMACOLLECT.GE')}
+            </span>
           </div>
         </div>
       </div>

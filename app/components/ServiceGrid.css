@@ -76,6 +76,7 @@ html, body {
   .service-square-link {
     color: white;
     text-decoration: none;
+    border-bottom: none;
     font-family: 'Futura Md BT', Futura, sans-serif;
     font-weight: 700;
     font-size: 20px;
@@ -91,6 +92,14 @@ html, body {
   
   .service-square-link:hover {
     opacity: 1;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  .service-square-link:focus,
+  .service-square-link:active {
+    text-decoration: none;
+    border-bottom: none;
   }
   
   /* =========================

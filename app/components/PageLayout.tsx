@@ -12,6 +12,7 @@ import {Header, HeaderMenu} from '~/components/Header';
 import LoopingText from '~/components/LoopingText';
 import {NextHeader} from '~/components/NextHeader';
 import {NextFooter} from '~/components/NextFooter';
+import {I18nProvider} from '~/lib/i18n';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -38,18 +39,20 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <Aside.Provider>
-      {/* <CartAside cart={cart} /> */}
-      {/* <SearchAside /> */}
-      {/* <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} /> */}
-      <LoopingText />
-      <NextHeader />
-      <main>{children}</main>
-      <NextFooter />
-      {/* <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      /> */}
+      <I18nProvider>
+        {/* <CartAside cart={cart} /> */}
+        {/* <SearchAside /> */}
+        {/* <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} /> */}
+        <LoopingText />
+        <NextHeader />
+        <main>{children}</main>
+        <NextFooter />
+        {/* <Footer
+          footer={footer}
+          header={header}
+          publicStoreDomain={publicStoreDomain}
+        /> */}
+      </I18nProvider>
     </Aside.Provider>
   );
 }

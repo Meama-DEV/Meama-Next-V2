@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useState, useEffect, useCallback, useMemo} from 'react';
 import './ServiceGrid.css';
+import {useI18n} from '~/lib/i18n';
 
 interface ServiceData {
   id: string;
@@ -9,76 +10,8 @@ interface ServiceData {
   description: string;
 }
 
-const services: ServiceData[] = [
-  {
-    id: 'innovations',
-    title: 'ინოვაციები და მომავლის ხედვა',
-    color: '#F14C01', // Orange
-    bullets: [
-      'ხედავ ინოვაციურ გადაწყვეტებს',
-      'ქმნი მომავლის ტექნოლოგიებს',
-      'განვითარებ ინოვაციურ პროცესებს',
-    ],
-    description: 'გეხმარებით ინოვაციური უნარების სრულყოფაში',
-  },
-  {
-    id: 'analytical',
-    title: 'ანალიტიკური და სტრატეგიული აზროვნება',
-    color: '#5C0BC5', // Purple
-    bullets: [
-      'ხედავ კანონზომიერებებს',
-      'აგვარებ კომპლექსურ პრობლემებს',
-      'ქმნი ბიზნეს სტატეგიებს',
-    ],
-    description: 'გეხმარებით ანალიტიკური უნარების სრულყოფაში',
-  },
-  {
-    id: 'financial',
-    title: 'ფინანსური რესურსების მართვა',
-    color: '#024853', // Dark Teal
-    bullets: [
-      'ანალიზს ატარებ ფინანსურ მონაცემებზე',
-      'ქმნი ეფექტურ ბიუჯეტებს',
-      'ოპტიმიზირებ ფინანსურ პროცესებს',
-    ],
-    description: 'გეხმარებით ფინანსური მართვის უნარების სრულყოფაში',
-  },
-  {
-    id: 'communication',
-    title: 'კომუნიკაცია და მენჯმენტი',
-    color: '#A0D39F', // Light Green
-    bullets: [
-      'აგვარებ კომუნიკაციის გამოწვევებს',
-      'ქმნი ეფექტურ გუნდებს',
-      'განვითარებ ლიდერულ უნარებს',
-    ],
-    description: 'გეხმარებით კომუნიკაციისა და მენეჯმენტის უნარების სრულყოფაში',
-  },
-  {
-    id: 'rd',
-    title: 'R&D (კვლევა და განვითარება)',
-    color: '#FF7BFF', // Pink
-    bullets: [
-      'ატარებ სისტემატურ კვლევებს',
-      'ქმნი განვითარების სტრატეგიებს',
-      'განვითარებ ინოვაციურ პროდუქტებს',
-    ],
-    description: 'გეხმარებით კვლევისა და განვითარების უნარების სრულყოფაში',
-  },
-  {
-    id: 'logistics',
-    title: 'გლობალური ლოჯისტიკა',
-    color: '#90712E', // Brown/Olive
-    bullets: [
-      'ოპტიმიზირებ ლოჯისტიკურ პროცესებს',
-      'მართავ გლობალურ ჯაჭვებს',
-      'ქმნი ეფექტურ სისტემებს',
-    ],
-    description: 'გეხმარებით ლოჯისტიკური უნარების სრულყოფაში',
-  },
-];
-
 export function ServiceGrid() {
+  const {t, get, locale} = useI18n();
   const [selectedService, setSelectedService] = useState<ServiceData | null>(
     null,
   );
@@ -148,9 +81,72 @@ export function ServiceGrid() {
     };
   }, [selectedService, handleCloseModal]);
 
+  const services = useMemo<ServiceData[]>(
+    () => [
+      {
+        id: 'innovations',
+        title: t('serviceGrid.services.innovations.title', ''),
+        color: '#F14C01', // Orange
+        bullets: get<string[]>(
+          'serviceGrid.services.innovations.bullets',
+          [],
+        ),
+        description: t('serviceGrid.services.innovations.description', ''),
+      },
+      {
+        id: 'analytical',
+        title: t('serviceGrid.services.analytical.title', ''),
+        color: '#5C0BC5', // Purple
+        bullets: get<string[]>(
+          'serviceGrid.services.analytical.bullets',
+          [],
+        ),
+        description: t('serviceGrid.services.analytical.description', ''),
+      },
+      {
+        id: 'financial',
+        title: t('serviceGrid.services.financial.title', ''),
+        color: '#024853', // Dark Teal
+        bullets: get<string[]>(
+          'serviceGrid.services.financial.bullets',
+          [],
+        ),
+        description: t('serviceGrid.services.financial.description', ''),
+      },
+      {
+        id: 'communication',
+        title: t('serviceGrid.services.communication.title', ''),
+        color: '#A0D39F', // Light Green
+        bullets: get<string[]>(
+          'serviceGrid.services.communication.bullets',
+          [],
+        ),
+        description: t('serviceGrid.services.communication.description', ''),
+      },
+      {
+        id: 'rd',
+        title: t('serviceGrid.services.rd.title', ''),
+        color: '#FF7BFF', // Pink
+        bullets: get<string[]>('serviceGrid.services.rd.bullets', []),
+        description: t('serviceGrid.services.rd.description', ''),
+      },
+      {
+        id: 'logistics',
+        title: t('serviceGrid.services.logistics.title', ''),
+        color: '#90712E', // Brown/Olive
+        bullets: get<string[]>(
+          'serviceGrid.services.logistics.bullets',
+          [],
+        ),
+        description: t('serviceGrid.services.logistics.description', ''),
+      },
+    ],
+    [get, t, locale],
+  );
+
   return (
     <>
-      <div className="service-grid">
+      <div className="service-grid" id="service-grid">
         {services.map((service) => (
           <div
             key={service.id}
@@ -165,7 +161,7 @@ export function ServiceGrid() {
                 href="#"
                 onClick={(e) => e.preventDefault()}
               >
-                იხილეთ მეტი →
+                {t('serviceGrid.seeMore', 'იხილეთ მეტი →')}
               </a>
             </div>
           </div>
@@ -210,7 +206,7 @@ export function ServiceGrid() {
                 {selectedService.description}
               </p>
               <button className="service-modal-button">
-                შეავსე ფორმა
+                {t('serviceGrid.fillForm', 'შეავსე ფორმა')}
               </button>
             </div>
           </div>

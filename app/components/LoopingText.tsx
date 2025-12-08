@@ -1,42 +1,31 @@
-import React, { useEffect, useState } from "react";
-import "./LoopingText.css";
+import React, {useEffect, useState} from 'react';
+import './LoopingText.css';
+import {useI18n} from '~/lib/i18n';
 
 const LoopingText: React.FC = () => {
-  const [shouldRender, setShouldRender] = useState(false);
-  const text = "OPEN YOUR EYES";
+  const {t} = useI18n();
+  const [isVisible, setIsVisible] = useState(false);
+  const text = t('loopingText.text', 'OPEN YOUR EYES').toUpperCase();
 
   useEffect(() => {
-    // Only render on client-side after mount to prevent SSR flash
-    // Use double requestAnimationFrame + timeout to ensure everything is ready
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        // Small delay to ensure CSS is loaded and browser is ready
-        setTimeout(() => {
-          setShouldRender(true);
-        }, 100);
-      });
-    });
+    // Flip to visible as soon as we're hydrated so it shows immediately
+    requestAnimationFrame(() => setIsVisible(true));
   }, []);
 
-  // Don't render anything on server or during initial client render
-  if (!shouldRender) {
-    return null;
-  }
-
-  // create a bunch of copies so the strip is long enough
-  const items = Array.from({ length: 12 }, (_, i) => (
+  const items = Array.from({length: 12}, (_, i) => (
     <span className="looping-text__item" key={i}>
       {text}
     </span>
   ));
 
   return (
-    <div className="looping-text__wrapper looping-text__wrapper--visible">
+    <div
+      className={`looping-text__wrapper ${
+        isVisible ? 'looping-text__wrapper--visible' : 'looping-text__wrapper--hidden'
+      }`}
+    >
       <div className="looping-text__track">
-        {/* first copy of the track */}
         <div className="looping-text__group">{items}</div>
-
-        {/* second copy for seamless looping */}
         <div className="looping-text__group" aria-hidden="true">
           {items}
         </div>
