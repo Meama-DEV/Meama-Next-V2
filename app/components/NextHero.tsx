@@ -4,6 +4,9 @@ import {useI18n} from '~/lib/i18n';
 
 export function NextHero() {
   const {t} = useI18n();
+  const goToForm = () => {
+    window.open('https://u3o0jbl2.forms.app/meama-next', '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <section className="next-hero">
@@ -28,7 +31,9 @@ export function NextHero() {
           <br />
           {t('hero.bodyLine2', 'აღმოაჩინე ახალი შესაძლებლობები.')}
         </p>
-        <button className="next-hero__button">{t('hero.cta', 'დაიწყე მოგზაურობა')}</button>
+        <button className="next-hero__button" onClick={goToForm}>
+          {t('hero.cta', 'დაიწყე მოგზაურობა')}
+        </button>
       </div>
     </section>
   );

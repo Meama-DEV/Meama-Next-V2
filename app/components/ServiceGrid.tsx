@@ -22,6 +22,10 @@ export function ServiceGrid() {
     setSelectedService(service);
   };
 
+  const goToForm = () => {
+    window.open('https://u3o0jbl2.forms.app/meama-next', '_blank', 'noopener,noreferrer');
+  };
+
   const handleCloseModal = useCallback(() => {
     setSelectedService(null);
     setTouchStartY(null);
@@ -205,7 +209,7 @@ export function ServiceGrid() {
               <p className="service-modal-description">
                 {selectedService.description}
               </p>
-              <button className="service-modal-button">
+              <button className="service-modal-button" onClick={goToForm}>
                 {t('serviceGrid.fillForm', 'შეავსე ფორმა')}
               </button>
             </div>

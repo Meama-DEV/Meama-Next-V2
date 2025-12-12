@@ -69,6 +69,11 @@ export function NextHeader() {
     [location.pathname, navigate, scrollToServiceGrid],
   );
 
+  const handleContactClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.open('https://u3o0jbl2.forms.app/meama-next', '_blank', 'noopener,noreferrer');
+  }, []);
+
   const languageOptions = useMemo(
     () =>
       [
@@ -121,7 +126,11 @@ export function NextHeader() {
           >
             {t('header.navDirections', 'მიმართულებები')}
           </Link>
-          <Link to="/contact" className="next-header__georgian-link">
+          <Link
+            to="/contact"
+            className="next-header__georgian-link"
+            onClick={handleContactClick}
+          >
             {t('header.navContact', 'კონტაქტი')}
           </Link>
         </div>

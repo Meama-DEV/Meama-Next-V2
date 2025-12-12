@@ -27,56 +27,64 @@
       "innovations": {
         "title": "Innovation and future vision",
         "bullets": [
-          "You spot innovative solutions",
-          "You build technologies of the future",
-          "You develop innovative processes"
+          "Here you will dive deep into MEAMA's digital strategy.",
+          "You will get acquainted with research and implementation of new technologies.",
+          "You will learn how MEAMA's ecosystem technological solutions are created and optimized.",
+          "You will become part of the innovations that shape MEAMA's future."
         ],
-        "description": "We help you refine innovative skills"
+        "description": ""
       },
       "analytical": {
         "title": "Analytical and strategic thinking",
         "bullets": [
-          "You see patterns",
-          "You solve complex problems",
-          "You craft business strategies"
+          "In this direction, you will study how data analysis is conducted at MEAMA.",
+          "You will learn to identify market trends.",
+          "You will study the development of long-term business strategies based on this information.",
+          "You will be taught how to turn data into decisions.",
+          "You will work on real cases."
         ],
-        "description": "We help you refine analytical skills"
+        "description": ""
       },
       "financial": {
         "title": "Financial resource management",
         "bullets": [
-          "You analyze financial data",
-          "You build efficient budgets",
-          "You optimize financial processes"
+          "In this block, you will study the management of MEAMA's financial operations.",
+          "You will get acquainted with budgeting processes.",
+          "You will learn to prepare and analyze financial reports.",
+          "You will study revenue forecasting.",
+          "It will give you the tools to become an integral part of the company's financial success."
         ],
-        "description": "We help you refine financial management skills"
+        "description": ""
       },
       "communication": {
         "title": "Communication and management",
         "bullets": [
-          "You resolve communication challenges",
-          "You build effective teams",
-          "You develop leadership skills"
+          "You will learn the principles of leadership and effective methods of teamwork.",
+          "You will learn how to build strong internal and external communication.",
+          "You will study how to manage projects.",
+          "You will gain experience in solving real management challenges."
         ],
-        "description": "We help you refine communication and management skills"
+        "description": ""
       },
       "rd": {
         "title": "R&D (Research and Development)",
         "bullets": [
-          "You conduct systematic research",
-          "You create development strategies",
-          "You develop innovative products"
+          "In this direction, you will get acquainted with MEAMA's R&D processes.",
+          "This includes the creation of new coffee, tea, and functional beverage capsules.",
+          "As well as research and development of technological solutions that serve to optimize our ecosystem.",
+          "You will learn their testing and conversion into products or services.",
+          "You will find out how ideas are generated."
         ],
-        "description": "We help you refine research and development skills"
+        "description": ""
       },
       "logistics": {
         "title": "Global logistics",
         "bullets": [
-          "You optimize logistics processes",
-          "You manage global chains",
-          "You build efficient systems"
+          "You will study modern methods of international transportation, warehousing, and inventory management.",
+          "You will understand how logistics processes are optimized to reduce costs and increase efficiency.",
+          "You will work on real logistics challenges and develop solutions that will facilitate MEAMA's efficient distribution of products worldwide."
         ],
-        "description": "We help you refine logistics skills"
+        "description": ""
       }
     }
   },

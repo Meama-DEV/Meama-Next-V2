@@ -62,8 +62,8 @@ html, body {
     color: white;
     font-family: 'Futura Md BT', Futura, sans-serif;
     font-weight: 700;
-    font-size: 46px;
-    line-height: 50px;
+    font-size: 42px;
+    line-height: 46px;
     letter-spacing: -0.75px;
     text-transform: uppercase;
     margin: 0;
@@ -216,8 +216,8 @@ html, body {
     display: block;
     width: fit-content;
     padding: 16px 32px;
-    background-color: #6B46C1;
-    color: white;
+  background-color: #5c0bc5;
+  color: #fff;
     border: none;
     border-radius: 50px;
     font-size: 18px;
@@ -255,8 +255,8 @@ html, body {
     .service-square-title {
       font-family: 'Futura Md BT', Futura, sans-serif;
       font-weight: 700;
-      font-size: 32px;
-      line-height: 42px;
+      font-size: 30px;
+      line-height: 38px;
       letter-spacing: -0.75px;
       text-transform: uppercase;
       max-width: 100%;
@@ -335,7 +335,9 @@ html, body {
     }
   
     .service-modal-bullets {
-      display: none;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
     }
 
     .service-modal-bullets li {
@@ -343,11 +345,6 @@ html, body {
       color: #000;
       margin-bottom: 12px;
       line-height: 1.5;
-    }
-
-    .service-modal-bullets li:before {
-      content: '•';
-      margin-right: 8px;
     }
 
     .service-modal-description {

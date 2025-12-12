@@ -16,7 +16,7 @@ import {ServiceGrid} from '~/components/ServiceGrid';
 
 
 export const meta: Route.MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Meama Next'}];
 };
 
 export async function loader(args: Route.LoaderArgs) {
