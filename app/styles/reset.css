@@ -1,5 +1,6 @@
 html {
   overflow-x: hidden;
+  background: #000;
 }
 
 body {
@@ -17,6 +18,8 @@ body {
     sans-serif;
   margin: 0;
   padding: 0;
+  background: #000;
+  color: #fff;
 }
 
 h1,
@@ -141,4 +144,14 @@ code {
   border-radius: 4px;
   font-family: monospace;
   padding: 0.25rem;
+}
+
+.pageShell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageMain {
+  flex: 1;
 }
