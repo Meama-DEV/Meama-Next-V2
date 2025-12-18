@@ -17,15 +17,26 @@ function addCspSources(header: string, directive: string, sources: string[]) {
     (p) => p === directive || p.startsWith(directive + ' '),
   );
 
+  const defaultIdx = parts.findIndex(
+    (p) => p === 'default-src' || p.startsWith('default-src '),
+  );
+
+  const baseSources =
+    idx !== -1
+      ? parts[idx].split(/\s+/).slice(1)
+      : defaultIdx !== -1
+        ? parts[defaultIdx].split(/\s+/).slice(1)
+        : ["'self'"];
+
+  const sourceSet = new Set(baseSources);
+  for (const source of sources) sourceSet.add(source);
+
   if (idx === -1) {
-    parts.push(`${directive} 'self' ${sources.join(' ')}`);
+    parts.push(`${directive} ${Array.from(sourceSet).join(' ')}`);
     return parts.join('; ') + ';';
   }
 
-  const existing = parts[idx];
-  const additions = sources.filter((s) => !existing.includes(s));
-
-  parts[idx] = existing + (additions.length ? ' ' + additions.join(' ') : '');
+  parts[idx] = `${directive} ${Array.from(sourceSet).join(' ')}`;
   return parts.join('; ') + ';';
 }
 
@@ -68,6 +79,7 @@ export default async function handleRequest(
   responseHeaders.set('Content-Type', 'text/html');
 
   const enhancedCsp = addCspSources(header, 'img-src', [
+    'https://cdn.shopify.com',
     'https://drive.google.com',
     'https://accounts.google.com',
     'https://*.googleusercontent.com',
