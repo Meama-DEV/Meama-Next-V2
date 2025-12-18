@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router';
 import logo from '~/assets/Frame 1.svg';
 import './NextHeader.css';
@@ -14,13 +8,18 @@ export function NextHeader() {
   const navigate = useNavigate();
   const location = useLocation();
   const {locale, setLocale, t} = useI18n();
+
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const [isDesktop, setIsDesktop] = useState(() =>
     typeof window !== 'undefined'
       ? window.matchMedia('(min-width: 769px)').matches
       : true,
   );
+
   const languageRef = useRef<HTMLDivElement | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -31,17 +30,29 @@ export function NextHeader() {
     return () => mediaQuery.removeEventListener('change', updateMatch);
   }, []);
 
+  // Close dropdowns when route changes
+  useEffect(() => {
+    setIsLanguageOpen(false);
+    setIsMobileMenuOpen(false);
+  }, [location.pathname, location.hash]);
+
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (
-        languageRef.current &&
-        !languageRef.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+
+      if (languageRef.current && !languageRef.current.contains(target)) {
         setIsLanguageOpen(false);
       }
+
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
+        setIsMobileMenuOpen(false);
+      }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('touchstart', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
@@ -69,33 +80,43 @@ export function NextHeader() {
     [location.pathname, navigate, scrollToServiceGrid],
   );
 
-  const handleContactClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    window.open('https://u3o0jbl2.forms.app/meama-next', '_blank', 'noopener,noreferrer');
+  const handleContactClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      window.open(
+        'https://u3o0jbl2.forms.app/meama-next',
+        '_blank',
+        'noopener,noreferrer',
+      );
+    },
+    [],
+  );
+
+  const handleGraduatesClick = useCallback(() => {
+    setIsMobileMenuOpen(false);
   }, []);
 
   const languageOptions = useMemo(
-    () =>
-      [
-        {
-          code: 'ka' as const,
-          label: isDesktop
-            ? t('header.languageFullGeorgian', 'ქართული')
-            : t('header.languageShortGeorgian', 'ქარ'),
-        },
-        {
-          code: 'en' as const,
-          label: isDesktop
-            ? t('header.languageFullEnglish', 'English')
-            : t('header.languageShortEnglish', 'Eng'),
-        },
-        {
-          code: 'ru' as const,
-          label: isDesktop
-            ? t('header.languageFullRussian', 'Русский')
-            : t('header.languageShortRussian', 'Рус'),
-        },
-      ],
+    () => [
+      {
+        code: 'ka' as const,
+        label: isDesktop
+          ? t('header.languageFullGeorgian', 'ქართული')
+          : t('header.languageShortGeorgian', 'ქარ'),
+      },
+      {
+        code: 'en' as const,
+        label: isDesktop
+          ? t('header.languageFullEnglish', 'English')
+          : t('header.languageShortEnglish', 'Eng'),
+      },
+      {
+        code: 'ru' as const,
+        label: isDesktop
+          ? t('header.languageFullRussian', 'Русский')
+          : t('header.languageShortRussian', 'Рус'),
+      },
+    ],
     [isDesktop, t],
   );
 
@@ -106,18 +127,16 @@ export function NextHeader() {
   return (
     <header className="next-header">
       <div className="next-header__top-line"></div>
+
       <div className="next-header__container">
-        {/* Left section: Logo + MEAMA + Separator + NEXT */}
+        {/* Left section: Logo */}
         <div className="next-header__left">
           <Link to="/" className="next-header__logo-link">
             <img src={logo} alt="MEAMA" className="next-header__logo" />
-            {/* <span className="next-header__brand">MEAMA</span>
-            <span className="next-header__separator"></span>
-            <span className="next-header__next">NEXT</span> */}
           </Link>
         </div>
 
-        {/* Middle section: Georgian text */}
+        {/* Middle section: Desktop nav */}
         <div className="next-header__middle">
           <Link
             to="/#service-grid"
@@ -126,6 +145,7 @@ export function NextHeader() {
           >
             {t('header.navDirections', 'მიმართულებები')}
           </Link>
+
           <Link
             to="/contact"
             className="next-header__georgian-link"
@@ -133,7 +153,16 @@ export function NextHeader() {
           >
             {t('header.navContact', 'კონტაქტი')}
           </Link>
+
+          <Link
+            to="/graduates"
+            className="next-header__georgian-link"
+            onClick={handleGraduatesClick as any}
+          >
+            {t('header.navGraduates', 'კურსდამთავრებულები')}
+          </Link>
         </div>
+
 
         {/* Right section: Language selector */}
         <div className="next-header__right">
@@ -151,7 +180,10 @@ export function NextHeader() {
               className="next-header__language"
               aria-haspopup="true"
               aria-expanded={isLanguageOpen}
-              onClick={() => setIsLanguageOpen((open) => !open)}
+              onClick={() => {
+                setIsLanguageOpen((open) => !open);
+                setIsMobileMenuOpen(false);
+              }}
             >
               <svg
                 className="next-header__globe"
@@ -190,12 +222,14 @@ export function NextHeader() {
                   strokeWidth="1.5"
                 />
               </svg>
+
               <span className="next-header__language-text next-header__language-text--full">
                 {currentLanguageLabel}
               </span>
               <span className="next-header__language-text next-header__language-text--short">
                 {currentLanguageLabel}
               </span>
+
               <svg
                 className="next-header__chevron"
                 width="12"
@@ -214,6 +248,7 @@ export function NextHeader() {
                 />
               </svg>
             </button>
+
             <div
               className={`next-header__language-menu ${
                 isLanguageOpen ? 'is-open' : ''
@@ -235,9 +270,68 @@ export function NextHeader() {
               ))}
             </div>
           </div>
+
+          {/* Mobile hamburger (only visible on mobile) */}
+          <div className="next-header__mobileMenuWrap" ref={mobileMenuRef}>
+            <button
+              type="button"
+              className="next-header__hamburger"
+              aria-label="Open menu"
+              aria-haspopup="true"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => {
+                setIsMobileMenuOpen((open) => !open);
+                // Don’t keep both dropdowns open
+                setIsLanguageOpen(false);
+              }}
+            >
+              <span className="next-header__hamburger-line" />
+              <span className="next-header__hamburger-line" />
+              <span className="next-header__hamburger-line" />
+            </button>
+
+            <div
+              className={`next-header__mobile-menu ${
+                isMobileMenuOpen ? 'is-open' : ''
+              }`}
+              role="menu"
+            >
+              <Link
+                to="/graduates"
+                className="next-header__mobile-menu-link"
+                role="menuitem"
+                onClick={handleGraduatesClick}
+              >
+                {t('header.navGraduates', 'კურსდამთავრებულები')}
+              </Link>
+
+              <Link
+                to="/#service-grid"
+                className="next-header__mobile-menu-link"
+                role="menuitem"
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  handleServicesClick(e);
+                }}
+              >
+                {t('header.navDirections', 'მიმართულებები')}
+              </Link>
+
+              <Link
+                to="/contact"
+                className="next-header__mobile-menu-link"
+                role="menuitem"
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  handleContactClick(e);
+                }}
+              >
+                {t('header.navContact', 'კონტაქტი')}
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </header>
   );
 }
-

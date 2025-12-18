@@ -2,6 +2,7 @@
   "header": {
     "navDirections": "Directions",
     "navContact": "Contact",
+    "navGraduates": "Graduates",
     "languageFullGeorgian": "Georgian",
     "languageShortGeorgian": "Geo",
     "languageFullEnglish": "English",
@@ -95,6 +96,9 @@
   },
   "loopingText": {
     "text": "Open your eyes"
+  },
+  "graduates": {
+  "title": "Graduates",
+  "empty": "No graduates found yet"
   }
 }
-
