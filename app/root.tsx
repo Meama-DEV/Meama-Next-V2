@@ -21,7 +21,6 @@ import nextHeroStyles from '~/components/NextHero.css?url';
 import nextHero2Styles from '~/components/NextHero2.css?url';
 import nextFooterStyles from '~/components/NextFooter.css?url';
 import loopingTextStyles from '~/components/LoopingText.css?url';
-import graduatesStyles from '~/components/Graduates.css?url';
 import {PageLayout} from './components/PageLayout';
 
 export type RootLoader = typeof loader;
@@ -77,7 +76,6 @@ export function links() {
     {rel: 'stylesheet', href: nextHero2Styles},
     {rel: 'stylesheet', href: nextFooterStyles},
     {rel: 'stylesheet', href: loopingTextStyles},
-    {rel: 'stylesheet', href: graduatesStyles},
   ];
 }
 

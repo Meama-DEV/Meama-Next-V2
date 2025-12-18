@@ -1,3 +1,4 @@
+
 import {Await, Link} from 'react-router';
 import {Suspense, useId} from 'react';
 import type {
@@ -6,9 +7,11 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
+import {Footer} from '~/components/Footer';
+import {Header, HeaderMenu} from '~/components/Header';
+import LoopingText from '~/components/LoopingText';
 import {NextHeader} from '~/components/NextHeader';
 import {NextFooter} from '~/components/NextFooter';
-import LoopingText from '~/components/LoopingText';
 import {I18nProvider} from '~/lib/i18n';
 import {CartMain} from '~/components/CartMain';
 import {
@@ -40,14 +43,10 @@ export function PageLayout({
         {/* <CartAside cart={cart} /> */}
         {/* <SearchAside /> */}
         {/* <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} /> */}
-
-        <div className="pageShell">
-          <LoopingText />
-          <NextHeader />
-          <main className="pageMain">{children}</main>
-          <NextFooter />
-        </div>
-
+        <LoopingText />
+        <NextHeader />
+        <main>{children}</main>
+        <NextFooter />
         {/* <Footer
           footer={footer}
           header={header}
@@ -151,5 +150,27 @@ function SearchAside() {
         </SearchResultsPredictive>
       </div>
     </Aside>
+  );
+}
+
+function MobileMenuAside({
+  header,
+  publicStoreDomain,
+}: {
+  header: PageLayoutProps['header'];
+  publicStoreDomain: PageLayoutProps['publicStoreDomain'];
+}) {
+  return (
+    header.menu &&
+    header.shop.primaryDomain?.url && (
+      <Aside type="mobile" heading="MENU">
+        <HeaderMenu
+          menu={header.menu}
+          viewport="mobile"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+      </Aside>
+    )
   );
 }
